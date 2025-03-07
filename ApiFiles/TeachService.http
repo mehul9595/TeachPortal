@@ -26,8 +26,16 @@ Authorization: Bearer {{access_token}}
 
 ### GET PAGED - Teachers
 # @name getpagedteachers
-GET {{TeachService_HostAddress}}/api/teachers/paged?PageNumber=1&PageSize=5
+POST {{TeachService_HostAddress}}/api/teachers/paged
 Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "pageOptions": {
+    "pageNumber": 1,
+    "pageSize": 15
+  }
+}
 
 
 ### CREATE STUDENT

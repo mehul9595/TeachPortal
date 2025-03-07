@@ -39,9 +39,17 @@ public class TeachersController : ControllerBase
         return Ok(teachers);
     }
 
-    [HttpGet("paged")]
-    public async Task<ActionResult<List<TeacherViewModel>>> GetTeachers(int pageNumber = 1, int pageSize = 10)
+    [HttpPost("paged")]
+    public async Task<ActionResult<List<TeacherViewModel>>> GetTeachers(TeacherGetPagedRequest request)
     {
+        if (request is null)
+        {
+            throw new ArgumentNullException(nameof(request));
+        }
+
+        var pageNumber = request.PageOptions.PageNumber;
+        var pageSize = request.PageOptions.PageSize;
+
         var query = _context.Teachers.Include(t => t.Students)
                                      .Select(t => new TeacherViewModel
                                      {
