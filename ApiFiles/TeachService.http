@@ -18,13 +18,17 @@ Content-Type: application/json
 GET https://httpbin.org/get
 Authorization: Bearer {{access_token}}
 
-
-
 ### GET TEACHERS
 # @name getteachers
 
 GET {{TeachService_HostAddress}}/api/teachers
 Authorization: Bearer {{access_token}}
+
+### GET PAGED - Teachers
+# @name getpagedteachers
+GET {{TeachService_HostAddress}}/api/teachers/paged?PageNumber=1&PageSize=5
+Authorization: Bearer {{access_token}}
+
 
 ### CREATE STUDENT
 # @name addstudent
