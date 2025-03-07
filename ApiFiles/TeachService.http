@@ -1,0 +1,46 @@
+﻿@TeachService_HostAddress = https://localhost:7297
+
+### Login with the registered teacher
+
+# @name login
+POST https://localhost:7297/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "johndoe",
+  "password": "password123"
+}
+
+###
+@access_token = {{login.response.body.$.token}}
+
+### Check token value
+GET https://httpbin.org/get
+Authorization: Bearer {{access_token}}
+
+
+
+### GET TEACHERS
+# @name getteachers
+
+GET {{TeachService_HostAddress}}/api/teachers
+Authorization: Bearer {{access_token}}
+
+### CREATE STUDENT
+# @name addstudent
+
+POST {{TeachService_HostAddress}}/api/students
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+    "firstName": "Mehul-2",
+    "lastName": "Makwana-2",
+    "email": "johndoe-2@example.com"
+}
+
+### GET STUDENTS
+
+# @name getstudents
+GET {{TeachService_HostAddress}}/api/students
+Authorization: Bearer {{access_token}}

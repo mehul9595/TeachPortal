@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeachService", "TeachService\TeachService.csproj", "{1C6805E4-ED96-4529-B32F-5DB8FDC0FFDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiFiles", "ApiFiles", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		ApiFiles\Auth.http = ApiFiles\Auth.http
+		ApiFiles\TeachService.http = ApiFiles\TeachService.http
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C6805E4-ED96-4529-B32F-5DB8FDC0FFDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C6805E4-ED96-4529-B32F-5DB8FDC0FFDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C6805E4-ED96-4529-B32F-5DB8FDC0FFDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C6805E4-ED96-4529-B32F-5DB8FDC0FFDC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D0FCB1C-68CF-4135-B094-BF2D05AA4A88}
+	EndGlobalSection
+EndGlobal
