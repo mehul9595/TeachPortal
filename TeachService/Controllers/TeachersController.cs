@@ -1,72 +1,101 @@
 // Controllers/TeachersController.cs
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TeachService.Helpers;
-using TeachService.Repositories;
-using TeachService.ViewModels;
-
 namespace TeachService.Controllers;
 
-
+/// <summary>
+/// TeachersController handles the API requests related to teachers.
+/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
 public class TeachersController : ControllerBase
 {
     private readonly TeachPortalContext _context;
+    private readonly ILogger<TeachersController> _logger;
 
-    public TeachersController(TeachPortalContext context)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TeachersController"/> class.
+    /// </summary>
+    /// <param name="context">The database context.</param>
+    /// <param name="logger">The logger instance.</param>
+    public TeachersController(TeachPortalContext context, ILogger<TeachersController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
+    /// <summary>
+    /// Gets the list of all teachers.
+    /// </summary>
+    /// <returns>A list of <see cref="TeacherViewModel"/>.</returns>
     [HttpGet]
     public async Task<ActionResult<List<TeacherViewModel>>> GetTeachers()
     {
-        var teachers = await _context.Teachers.Include(t => t.Students)
-                                              .Select(t => new TeacherViewModel
-                                              {
-                                                  Id = t.Id,
-                                                  Username = t.Username,
-                                                  FirstName = t.FirstName,
-                                                  LastName = t.LastName,
-                                                  Email = t.Email,
-                                                  StudentCount = t.Students.Count
-                                              })
-                                              .ToListAsync();
+        try
+        {
+            var teachers = await _context.Teachers.Include(t => t.Students)
+                                                  .Select(t => new TeacherViewModel
+                                                  {
+                                                      Id = t.Id,
+                                                      Username = t.Username,
+                                                      FirstName = t.FirstName,
+                                                      LastName = t.LastName,
+                                                      Email = t.Email,
+                                                      StudentCount = t.Students.Count
+                                                  })
+                                                  .ToListAsync();
 
-        return Ok(teachers);
+            return Ok(teachers);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while getting the list of teachers.");
+            return StatusCode(500, "Internal server error");
+        }
     }
 
+    /// <summary>
+    /// Gets a paginated list of teachers.
+    /// </summary>
+    /// <param name="request">The pagination request.</param>
+    /// <returns>A paginated list of <see cref="TeacherViewModel"/>.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the request is null.</exception>
     [HttpPost("paged")]
     public async Task<ActionResult<List<TeacherViewModel>>> GetTeachers(TeacherGetPagedRequest request)
     {
         if (request is null)
         {
+            _logger.LogError("Pagination request is null.");
             throw new ArgumentNullException(nameof(request));
         }
 
-        var pageNumber = request.PageOptions.PageNumber;
-        var pageSize = request.PageOptions.PageSize;
+        try
+        {
+            var pageNumber = request.PageOptions.PageNumber;
+            var pageSize = request.PageOptions.PageSize;
 
-        var query = _context.Teachers.Include(t => t.Students)
-                                     .Select(t => new TeacherViewModel
-                                     {
-                                         Id = t.Id,
-                                         Username = t.Username,
-                                         FirstName = t.FirstName,
-                                         LastName = t.LastName,
-                                         StudentCount = t.Students.Count
-                                     });
+            var query = _context.Teachers.Include(t => t.Students)
+                                         .Select(t => new TeacherViewModel
+                                         {
+                                             Id = t.Id,
+                                             Username = t.Username,
+                                             FirstName = t.FirstName,
+                                             LastName = t.LastName,
+                                             StudentCount = t.Students.Count
+                                         });
 
-        var totalCount = await query.CountAsync();
-        var teachers = await query.Skip((pageNumber - 1) * pageSize)
-                                  .Take(pageSize)
-                                  .ToListAsync();
+            var totalCount = await query.CountAsync();
+            var teachers = await query.Skip((pageNumber - 1) * pageSize)
+                                      .Take(pageSize)
+                                      .ToListAsync();
 
-        var pagedResult = new PagedResult<TeacherViewModel>(teachers, totalCount, pageNumber, pageSize);
+            var pagedResult = new PagedResult<TeacherViewModel>(teachers, totalCount, pageNumber, pageSize);
 
-        return Ok(pagedResult);
+            return Ok(pagedResult);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while getting the paginated list of teachers.");
+            return StatusCode(500, "Internal server error");
+        }
     }
 }
