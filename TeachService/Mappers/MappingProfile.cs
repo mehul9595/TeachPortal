@@ -20,5 +20,17 @@ public class MappingProfile : Profile
         /// Maps <see cref="Student"/> to <see cref="StudentResponse"/>.
         /// </summary>
         CreateMap<Student, StudentResponse>();
+
+        /// <summary>
+        /// Maps <see cref="Teacher"/> to <see cref="TeacherViewModel"/>.
+        /// </summary>
+        CreateMap<Teacher, TeacherViewModel>()
+            .ForMember(dest => dest.StudentCount, opt => opt.MapFrom(src => src.Students.Count));
+
+        /// <summary>
+        /// Maps <see cref="RegisterTeacher"/> to <see cref="Teacher"/>.
+        /// </summary>
+        CreateMap<RegisterTeacher, Teacher>()
+            .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => BCrypt.Net.BCrypt.HashPassword(src.Password)));
     }
 }

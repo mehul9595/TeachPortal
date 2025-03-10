@@ -11,16 +11,19 @@ public class TeachersController : ControllerBase
 {
     private readonly TeachPortalContext _context;
     private readonly ILogger<TeachersController> _logger;
+    private readonly IMapper _mapper;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TeachersController"/> class.
     /// </summary>
     /// <param name="context">The database context.</param>
     /// <param name="logger">The logger instance.</param>
-    public TeachersController(TeachPortalContext context, ILogger<TeachersController> logger)
+    /// <param name="mapper">The mapper instance.</param>
+    public TeachersController(TeachPortalContext context, ILogger<TeachersController> logger, IMapper mapper)
     {
         _context = context;
         _logger = logger;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -32,17 +35,9 @@ public class TeachersController : ControllerBase
     {
         try
         {
-            var teachers = await _context.Teachers.Include(t => t.Students)
-                                                  .Select(t => new TeacherViewModel
-                                                  {
-                                                      Id = t.Id,
-                                                      Username = t.Username,
-                                                      FirstName = t.FirstName,
-                                                      LastName = t.LastName,
-                                                      Email = t.Email,
-                                                      StudentCount = t.Students.Count
-                                                  })
-                                                  .ToListAsync();
+            var teachersList = await _context.Teachers.Include(t => t.Students).ToListAsync();
+
+            var teachers = _mapper.Map<List<TeacherViewModel>>(teachersList);
 
             return Ok(teachers);
         }

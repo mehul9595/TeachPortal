@@ -38,6 +38,16 @@ public static class Program
                 };
             });
 
+        // Add CORS
+        var origin = builder.Configuration["CorsOrigin:AllowedOrigins"];
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowSpecificOrigin",
+                builder => builder.WithOrigins(origin!) // Replace with your frontend URL
+                                  .AllowAnyHeader()
+                                  .AllowAnyMethod()
+                                  .AllowCredentials());
+        });
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
@@ -59,6 +69,8 @@ public static class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseCors("AllowSpecificOrigin");
 
         app.UseHttpsRedirection();
 

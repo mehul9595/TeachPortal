@@ -10,17 +10,21 @@ public class AuthController : ControllerBase
     private readonly TeachPortalContext _context;
     private readonly IConfiguration _configuration;
     private readonly ILogger<AuthController> _logger;
+    private readonly IMapper _mapper;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AuthController"/> class.
     /// </summary>
     /// <param name="context">The database context.</param>
     /// <param name="configuration">The configuration settings.</param>
-    public AuthController(TeachPortalContext context, IConfiguration configuration, ILogger<AuthController> logger)
+    /// <param name="logger">The logger instance.</param>
+    /// <param name="mapper">The mapper</param>
+    public AuthController(TeachPortalContext context, IConfiguration configuration, ILogger<AuthController> logger, IMapper mapper)
     {
         _context = context;
         _configuration = configuration;
         _logger = logger;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -29,7 +33,7 @@ public class AuthController : ControllerBase
     /// <param name="teacher">The teacher to register.</param>
     /// <returns>An <see cref="IActionResult"/> indicating the result of the registration.</returns>
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] Teacher teacher)
+    public async Task<IActionResult> Register([FromBody] RegisterTeacher teacher)
     {
         try
         {
@@ -38,8 +42,8 @@ public class AuthController : ControllerBase
                 return BadRequest("Username or Email already exists.");
             }
 
-            teacher.PasswordHash = BCrypt.Net.BCrypt.HashPassword(teacher.PasswordHash);
-            _context.Teachers.Add(teacher);
+            var teachVM = _mapper.Map<Teacher>(teacher);
+            _context.Teachers.Add(teachVM);
             await _context.SaveChangesAsync();
 
             return Ok("Registration successful.");
