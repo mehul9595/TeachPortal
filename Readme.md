@@ -1,4 +1,83 @@
-﻿## Managing SQLLite Database
+﻿# Running the Portal
+
+### Backend
+cd into ```TeachPortal``` directory. Backend service is located in ```TeachService``` folder. Build the project from the root directory or specify the project name.
+
+    dotnet build
+    dotnet run
+
+### Frontend
+Frontend code is saved in TeachWeb\teach-web. 
+Frontend is using React + Typescript, and using Vite for build and development tool.
+
+cd into ```TeachWeb\teach-web``` directory
+
+Start frontend using below command
+
+    npm run dev
+
+
+### Ports
+Frontend: http://localhost:5173
+
+Backend: https://localhost:7297
+
+Note: Frontend port is whitelisted in the backend service's appsettings.config. In any case, if the port is not the same then make sure to update the config.
+
+
+# TODO
+
+### Backend
+- [x] Setup ASP.NET Core Web API Project with Students/Teachers controllers
+- [x] Setup Repository Context for Students/Teachers
+- [x] Perform initial migration
+- [x] Add AuthController, and Models
+- [x] Add Students/Teachers Controller, and models
+- [x] Add EntityFramework Core & SQLite Database with Code First Approach
+- [x] Add JWT Authentication
+- [x] Add Logging
+- [x] Add AutoMapper
+- [x] Add API calls for Teacher registerstration and login using JWT Token
+- [x] Add API calls for Creating Students using logged in Teacher using JWT Token
+- [x] Add API calls for Getting Students using logged in Teacher using JWT Token
+- [x] Add Support for Paged Query Helpers
+- [x] Add API Calls for returning Paged results of the Teachers
+- [x] Create .http files for testing the API calls
+- [x] Basic Error Handling
+
+### Frontend
+- [x] Students list page for the logged in teacher
+- [x] add students to the logged in teacher
+- [x] teachers can see the list of other teachers and the student counts
+- [ ] GetTeachers is not calling paged api yet
+- [x] Added basic field validations for all the fields including password. Scope to add more stronger password generatio.
+- [x] Token is stored in localstorage. scope to move to session storage.
+
+# Further Improvements
+- [ ] Implement OTEL for tracing
+- [ ] Add Unit Tests
+- [ ] Add Integration Tests
+- [ ] Add Docker Support
+- [ ] Add CI/CD Pipeline
+- [ ] Add Authorization
+- [ ] Add Caching
+- [ ] Add Health Checks
+- [ ] Add Versioning
+- [ ] Add Documentation
+- [ ] Standardize Error Responses from the API
+- [ ] Delete teachers API call
+- [ ] Unit tests for frontend
+- [ ] test scrollbar for student and teacher list 
+
+
+
+## Managing SQLLite Database
+
+I've attached a sample SQLite database with dummy users to work with this project. The same can be used for testing or demo, or else we can follow the steps given below create a new database.
+
+johndoe : password123
+
+mehul4 : password123
 
 #### ConnectionString
 SQLLite db path is defined in `appsettings.json` file. Default path is `Data/teachportal.db`. If it is changed, make sure to update the path in `appsettings.json` file.
