@@ -44,6 +44,8 @@ Note: Frontend port is whitelisted in the backend service's appsettings.config. 
 - [x] Add API Calls for returning Paged results of the Teachers
 - [x] Create .http files for testing the API calls
 - [x] Basic Error Handling
+- [x] Add Documentation
+- [x] Add basic logging
 
 ### Frontend
 - [x] Students list page for the logged in teacher
@@ -63,7 +65,6 @@ Note: Frontend port is whitelisted in the backend service's appsettings.config. 
 - [ ] Add Caching
 - [ ] Add Health Checks
 - [ ] Add Versioning
-- [ ] Add Documentation
 - [ ] Standardize Error Responses from the API
 - [ ] Delete teachers API call
 - [ ] Unit tests for frontend
