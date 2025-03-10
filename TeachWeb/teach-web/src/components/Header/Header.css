@@ -1,0 +1,46 @@
+.header {
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.header nav ul {
+  list-style-type: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.header nav ul li {
+  margin: 0;
+}
+
+.header nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.header nav ul li a:hover {
+  color: #ffeb3b;
+}
+
+.header .nav-link {
+  transition: color 0.3s ease;
+}
+
+.header .nav-link:hover {
+  color: #ffeb3b; /* Change this to your desired hover color */
+}
+
+.header .btn-light:hover {
+  background-color: #e2e6ea; /* Change this to your desired hover background color */
+  color: #000; /* Change this to your desired hover text color */
+}
