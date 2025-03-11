@@ -28,5 +28,5 @@ public class RegisterTeacher
     /// <summary>
     /// Gets or sets the password of the teacher.
     /// </summary>
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
 }
