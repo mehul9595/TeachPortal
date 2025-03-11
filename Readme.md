@@ -3,6 +3,8 @@
 ### Backend
 cd into ```TeachPortal``` directory. Backend service is located in ```TeachService``` folder. Build the project from the root directory or specify the project name.
 
+_Note: runs on .net8.0 version_
+
     dotnet build
     dotnet run
 
