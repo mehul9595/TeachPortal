@@ -83,12 +83,12 @@ johndoe : password123
 mehul4 : password123
 
 #### ConnectionString
-SQLLite db path is defined in `appsettings.json` file. Default path is `Data/teachportal.db`. If it is changed, make sure to update the path in `appsettings.json` file.
+SQLLite db path is defined in `appsettings.json` file. Default path is `../Database/teachportal`. If it is changed, make sure to update the path in `appsettings.json` file.
 
 ```
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Data Source=Data/teachportal.db"
+    "DefaultConnection": "Data Source=../Database/teachportal.db"
   }
 }
 ```
